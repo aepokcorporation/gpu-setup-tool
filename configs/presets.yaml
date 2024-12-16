@@ -1,0 +1,9 @@
+presets:
+  tensorflow-ubuntu:
+    frameworks: ["tensorflow"]
+
+  pytorch-ubuntu:
+    frameworks: ["pytorch"]
+
+  quantum-starter:
+    frameworks: ["qiskit", "cirq"]
