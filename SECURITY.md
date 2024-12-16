@@ -14,7 +14,7 @@ If you discover a security vulnerability, please report it responsibly. Here’s
 
 1. **Open a Security Issue**:  
    - Submit an issue in the repository with the label **“security.”**  
-   - Alternatively, email us at [your-email@example.com] (replace this with your email or contact method).  
+   - Alternatively, email us at villas.erased-93@icloud.com  
 
 2. **Provide Detailed Information**:  
    - Steps to reproduce the issue.  
