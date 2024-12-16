@@ -1,0 +1,68 @@
+
+---
+**configs/compatibility.yaml**
+nvidia_a100:
+  driver_version: "525.60.13"
+  cuda_version: "11.8"
+  libraries:
+    - name: cuDNN
+      version: "8.4"
+    - name: NCCL
+      version: "2.14"
+  frameworks:
+    tensorflow: "2.10.0"
+    pytorch: "2.0.0"
+    qiskit: "latest"
+    cirq: "latest"
+  expected_performance:
+    # Rough placeholder metrics for demonstration:
+    pytorch_matmul_ms: 0.8  # expected time in ms for a 1000x1000 matmul
+    tf_resnet_inference_s: 0.02 # expected inference time on a small batch
+    note: "These are approximate values, just for comparison."
+
+nvidia_rtx_3090:
+  driver_version: "525.60.13"
+  cuda_version: "11.7"
+  libraries:
+    - name: cuDNN
+      version: "8.4"
+    - name: NCCL
+      version: "2.12"
+  frameworks:
+    tensorflow: "2.9.0"
+    pytorch: "1.13.0"
+    qiskit: "latest"
+    cirq: "latest"
+  expected_performance:
+    pytorch_matmul_ms: 1.0
+    tf_resnet_inference_s: 0.03
+    note: "Approximate metrics for comparison."
+
+unknown_gpu:
+  driver_version: "525"
+  cuda_version: "11.8"
+  libraries:
+    - name: cuDNN
+      version: "8.4"
+    - name: NCCL
+      version: "2.14"
+  frameworks:
+    tensorflow: "2.10.0"
+    pytorch: "2.0.0"
+    qiskit: "latest"
+    cirq: "latest"
+  # No expected_performance since unknown
+
+fallback:
+  driver_version: "525"
+  cuda_version: "11.8"
+  libraries:
+    - name: cuDNN
+      version: "8.4"
+    - name: NCCL
+      version: "2.14"
+  frameworks:
+    tensorflow: "2.10.0"
+    pytorch: "2.0.0"
+    qiskit: "latest"
+    cirq: "latest"
