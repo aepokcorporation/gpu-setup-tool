@@ -80,3 +80,10 @@ If you encounter issues or have suggestions, feel free to open an issue. Contrib
 ## License
 
 This project is licensed under the MIT License.
+
+### A Note on Testing
+
+This project is in its early stages and has not been tested across all possible environments.  
+If you encounter an issue, please submit it via GitHub issues or contribute directly by forking the repository and submitting a pull request.  
+
+Your feedback and contributions will help make this tool better for everyone!
