@@ -1,7 +1,8 @@
 # Advanced Usage
 
 ## CUSTOM FRAMEWORKS AND STEPS
-Use - --frameworks to specify frameworks you want installed. 
+Use 
+- --frameworks to specify frameworks you want installed. 
 For example:
 - --frameworks pytorch cirq installs only those frameworks.
 Use - --no-frameworks to skip framework installation entirely.
