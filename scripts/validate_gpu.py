@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
 import os
-import sys
 import subprocess
-import json
 from utils import log_info, log_error
 
 def run_tensorflow_test():
-    # More robust: Load a small model (e.g., ResNet50) and run inference on GPU
     try:
         import tensorflow as tf
         from tensorflow.keras.applications import resnet50
-        model = resnet50.ResNet50(weights=None)  # minimal model, random init
-        model = model.to_gpu = True
+        model = resnet50.ResNet50(weights=None)
         with tf.device('/GPU:0'):
-            dummy_input = tf.random.normal([1,224,224,3])
+            dummy_input = tf.random.normal([1, 224, 224, 3])
             pred = model(dummy_input)
         return f"TensorFlow ResNet inference on GPU successful. Output shape: {pred.shape}"
     except Exception as e:
         return f"TensorFlow test failed: {e}"
 
 def run_pytorch_test():
-    # Multi-layer MLP forward pass
     try:
         import torch
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -36,7 +31,6 @@ def run_pytorch_test():
                 x = torch.relu(self.fc1(x))
                 x = torch.relu(self.fc2(x))
                 return self.fc3(x)
-
         model = MLP().to(device)
         x = torch.randn(64, 1024, device=device)
         y = model(x)
@@ -49,7 +43,7 @@ def run_qiskit_test():
         import qiskit
         qc = qiskit.QuantumCircuit(2)
         qc.h(0)
-        qc.cx(0,1)
+        qc.cx(0, 1)
         sim = qiskit.Aer.get_backend('aer_simulator')
         result = qiskit.execute(qc, sim, shots=1024).result()
         counts = result.get_counts()
@@ -67,6 +61,35 @@ def run_cirq_test():
         return f"Cirq test successful, results: {result}"
     except Exception as e:
         return f"Cirq test failed: {e}"
+
+def run_onnx_test():
+    try:
+        import onnxruntime as ort
+        from onnxruntime.capi.onnxruntime_pybind11_state import InvalidArgument
+        providers = ort.get_available_providers()
+        if 'CUDAExecutionProvider' not in providers:
+            return "ONNX Runtime: CUDAExecutionProvider not available."
+        sess = ort.InferenceSession("resnet50-v2-7.onnx", providers=["CUDAExecutionProvider"])
+        dummy_input = {'data': [[0.5]*224*224*3]}
+        output = sess.run(None, dummy_input)
+        return f"ONNX Runtime inference on GPU successful. Output: {output[0][:5]}"
+    except FileNotFoundError:
+        return "ONNX test skipped: Model file not found (resnet50-v2-7.onnx)."
+    except Exception as e:
+        return f"ONNX Runtime test failed: {e}"
+
+def run_jax_test():
+    try:
+        import jax
+        import jax.numpy as jnp
+        from jax import device_put
+        key = jax.random.PRNGKey(0)
+        x = jax.random.normal(key, (500, 500))
+        x = device_put(x)  # Move to GPU
+        y = jnp.dot(x, x.T)
+        return f"JAX GPU matrix multiplication successful. Output shape: {y.shape}"
+    except Exception as e:
+        return f"JAX test failed: {e}"
 
 def validate_gpu():
     try:
@@ -90,6 +113,8 @@ def main():
     pt_result = run_pytorch_test()
     qk_result = run_qiskit_test()
     cq_result = run_cirq_test()
+    onnx_result = run_onnx_test()
+    jax_result = run_jax_test()
 
     if not os.path.exists("logs"):
         os.makedirs("logs")
@@ -104,6 +129,8 @@ def main():
         f.write(f"PyTorch: {pt_result}\n")
         f.write(f"Qiskit: {qk_result}\n")
         f.write(f"Cirq: {cq_result}\n")
+        f.write(f"ONNX Runtime: {onnx_result}\n")
+        f.write(f"JAX: {jax_result}\n")
 
     if gpu_ok and cuda_ok:
         log_info("Validation successful! GPU and CUDA are properly configured.")
