@@ -66,6 +66,7 @@ def install_cuda_toolkit(cuda_version, cloud_env):
             safe_subprocess_call(["sudo", "apt-get", "-y", "install", f"cuda-{cuda_version}"])
         configure_ldconfig(f"/usr/local/cuda-{cuda_version}")
         configure_env_vars(f"/usr/local/cuda-{cuda_version}")
+        log_info(f"CUDA Toolkit {cuda_version} installation completed successfully.")
     except Exception as e:
         raise RuntimeError(f"CUDA installation failed: {e}")
 
@@ -79,6 +80,7 @@ def install_cudnn(cuda_version, cudnn_version, cloud_env):
         safe_subprocess_call(["wget", cudnn_pkg_url])
         safe_subprocess_call(["tar", "-xvf", f"cudnn-{cuda_version}-linux-x64-v{cudnn_version}.tgz", "-C", "/usr/local"])
         configure_ldconfig(f"/usr/local/cuda-{cuda_version}")
+        log_info(f"cuDNN {cudnn_version} installation completed successfully.")
     except Exception as e:
         raise RuntimeError(f"cuDNN installation failed: {e}")
 
@@ -101,6 +103,7 @@ def main():
             install_cuda_toolkit(cuda_version, cloud_env)
             install_cudnn(cuda_version, cudnn_version, cloud_env)
             log_info(f"Installed CUDA version {cuda_version} and cuDNN version {cudnn_version} for {cloud_env}.")
+            log_info("CUDA and cuDNN installation completed successfully.")  # New success log entry
             print("CUDA and cuDNN installation complete.")
         except Exception:
             log_error("CUDA installation failed, attempting rollback.", sys.exc_info())
