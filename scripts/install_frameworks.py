@@ -35,6 +35,17 @@ def install_tensorflow(version):
     pkg = f"tensorflow=={version}"
     pip_install(pkg)
 
+def install_jax(cuda_version):
+    if cuda_version == "cpu":
+        pip_install("jax[cpu]")
+    else:
+        pkg = f"https://storage.googleapis.com/jax-releases/jaxlib-0.4.13-{cuda_version}-linux_x86_64.whl"
+        pip_install("jax")
+        pip_install(pkg)
+
+def install_onnx():
+    pip_install("onnxruntime-gpu")
+
 def install_qiskit(version):
     pkg = "qiskit" if version == "latest" else f"qiskit=={version}"
     pip_install(pkg)
@@ -79,6 +90,10 @@ def main():
                 install_pytorch(ver, cuda_version)
             elif fw == "tensorflow":
                 install_tensorflow(ver)
+            elif fw == "jax":
+                install_jax(cuda_version)
+            elif fw == "onnx":
+                install_onnx()
             elif fw == "qiskit":
                 install_qiskit(ver)
             elif fw == "cirq":
@@ -98,6 +113,10 @@ def main():
                     install_pytorch(ver, compatibility["fallback"]["cuda_version"])
                 elif fw == "tensorflow":
                     install_tensorflow(ver)
+                elif fw == "jax":
+                    install_jax(compatibility["fallback"]["cuda_version"])
+                elif fw == "onnx":
+                    install_onnx()
                 elif fw == "qiskit":
                     install_qiskit(ver)
                 elif fw == "cirq":
