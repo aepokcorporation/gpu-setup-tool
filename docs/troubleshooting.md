@@ -66,7 +66,7 @@ nvidia-smi
 If none of the above resolves the issue:
 
 Open a GitHub issue in the repository:
-https://github.com/aepokcorporation/gpu-setup-tool
+https://github.com/aepokcorporation/gpu-setup-tool/issues
 
 Include:
 - Your `logs/error_log.txt` file.
