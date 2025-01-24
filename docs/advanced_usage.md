@@ -5,7 +5,12 @@ Use:
 - `--frameworks` to specify frameworks you want installed. 
 For example:
 - `--frameworks` pytorch cirq installs only those frameworks.
-Use - `--no-frameworks` to skip framework installation entirely.
+
+Use:
+ - `--no-frameworks` to skip framework installation entirely.
+
+- These are optional arguments users can pass to the script.
+- They provide control over specific parts of the tool's behavior.
 
 ## HANDLING UNKNOWN GPUS OR OSES
 If your GPU or OS isn’t recognized, the tool defaults to the unknown_gpu or fallback configurations. To improve support for your environment:
