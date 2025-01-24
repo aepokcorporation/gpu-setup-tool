@@ -1,7 +1,7 @@
 # Security Policy
 
 ## Supported Versions  
-This project is currently in its **v0.1.0 (Initial Release)** stage. Security updates and fixes will apply to this version only.  
+This project is currently in its **v2.0 (Second Version Release)** stage. Security updates and fixes will apply to these versions only.  
 
 | Version   | Supported         |  
 | --------- | ----------------- |  
