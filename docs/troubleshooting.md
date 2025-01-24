@@ -25,10 +25,10 @@ If your GPU or OS isn’t recognized:
 
 1. Follow the guide in `docs/advanced_usage.md` to extend compatibility by editing `configs/compatibility.yaml`.
 2. Add a new entry with the following details:
-  - driver_version and cuda_version
-  - Libraries such as cuDNN and NCCL
-  - Frameworks with specific versions
-  - Optional `expected_performance` metrics for benchmarking comparison
+   - `driver_version` and `cuda_version`
+   - Libraries such as `cuDNN` and `NCCL`
+   - Frameworks with specific versions
+   - Optional `expected_performance` metrics for benchmarking comparison
 3. After defining these values, re-run the setup script to apply the changes.
 
 ## STEP 4: DOCKER/SINGULARITY ISSUES
@@ -58,9 +58,9 @@ nvidia-smi
 ```
 
 2. Verify GPU quotas and instance types:
-  - AWS: Use NVIDIA DL AMIs for pre-configured environments.
-  - Azure: Use NC-series or ND-series VMs.
-  - GCP: Ensure your project has sufficient GPU quotas.
+   - AWS: Use NVIDIA DL AMIs for pre-configured environments.
+   - Azure: Use NC-series or ND-series VMs.
+   - GCP: Ensure your project has sufficient GPU quotas.
 
 ## STEP 6: OPEN AN ISSUE
 If none of the above resolves the issue:
