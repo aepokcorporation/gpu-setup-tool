@@ -1,1 +1,6 @@
-
+# This is an example log file. Actual content will populate as the tool runs.
+[ERROR 2025-01-23 12:35:10] Command failed: docker build -t gpu-setup-tool .
+Traceback (most recent call last):
+  File "utils.py", line 112, in build_docker_image
+    check_call(["docker", "build", "-t", image_name, "."])
+CalledProcessError: Command '['docker', 'build', '-t', 'gpu-setup-tool', '.']' returned non-zero exit status 1.
