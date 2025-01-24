@@ -20,6 +20,7 @@ def pip_install(package):
         raise RuntimeError(f"Failed to install {package} via pip.")
 
 def install_pytorch(version, cuda_version):
+    log_info("Installing PyTorch framework...")
     cu_tag = "cu" + cuda_version.replace(".", "")
     pkg = f"torch=={version}"
     extras = ["torchvision", "torchaudio", "--extra-index-url", f"https://download.pytorch.org/whl/{cu_tag}"]
@@ -28,31 +29,42 @@ def install_pytorch(version, cuda_version):
         record_pip_package("torch")
         record_pip_package("torchvision")
         record_pip_package("torchaudio")
+        log_info("PyTorch installation completed successfully.")
     else:
         raise RuntimeError("PyTorch installation failed.")
 
 def install_tensorflow(version):
+    log_info("Installing TensorFlow framework...")
     pkg = f"tensorflow=={version}"
     pip_install(pkg)
+    log_info("TensorFlow installation completed successfully.")
 
 def install_jax(cuda_version):
+    log_info("Installing JAX framework...")
     if cuda_version == "cpu":
         pip_install("jax[cpu]")
     else:
         pkg = f"https://storage.googleapis.com/jax-releases/jaxlib-0.4.13-{cuda_version}-linux_x86_64.whl"
         pip_install("jax")
         pip_install(pkg)
+    log_info("JAX installation completed successfully.")
 
 def install_onnx():
+    log_info("Installing ONNX Runtime framework...")
     pip_install("onnxruntime-gpu")
+    log_info("ONNX Runtime installation completed successfully.")
 
 def install_qiskit(version):
+    log_info("Installing Qiskit framework...")
     pkg = "qiskit" if version == "latest" else f"qiskit=={version}"
     pip_install(pkg)
+    log_info("Qiskit installation completed successfully.")
 
 def install_cirq(version):
+    log_info("Installing Cirq framework...")
     pkg = "cirq" if version == "latest" else f"cirq=={version}"
     pip_install(pkg)
+    log_info("Cirq installation completed successfully.")
 
 def main():
     parser = argparse.ArgumentParser(description="Install ML and quantum frameworks.")
@@ -129,3 +141,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
