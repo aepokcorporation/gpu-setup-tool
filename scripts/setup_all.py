@@ -13,6 +13,7 @@ def run_step(cmd):
         subprocess.check_call(cmd, shell=True)
         return True
     except subprocess.CalledProcessError:
+        log_error(f"Command failed: {cmd}", sys.exc_info())
         return False
 
 def record_progress(step):
@@ -32,15 +33,16 @@ def get_last_successful_step():
 def generate_dockerfile():
     dockerfile_content = """
     FROM nvidia/cuda:11.8.0-base-ubuntu20.04
-    RUN apt-get update && apt-get install -y python3 python3-pip && \
+    RUN apt-get update && apt-get install -y python3 python3-pip && \\
         pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu118
     COPY . /workspace
     WORKDIR /workspace
     CMD ["python3", "scripts/validate_gpu.py"]
     """
-    with open("Dockerfile", "w") as f:
+    dockerfile_path = "Dockerfile"
+    with open(dockerfile_path, "w") as f:
         f.write(dockerfile_content)
-    log_info("Dockerfile generated successfully.")
+    log_info(f"Dockerfile generated successfully at {os.path.abspath(dockerfile_path)}.")  # Improved path logging
 
 def main():
     parser = argparse.ArgumentParser(description="Orchestrate full GPU setup.")
@@ -51,10 +53,16 @@ def main():
     parser.add_argument("--singularity", action="store_true", help="Enable Singularity container setup.")
     args = parser.parse_args()
 
+    # Docker setup
     if args.docker:
         log_info("Docker setup selected. Generating Dockerfile...")
         generate_dockerfile()
         sys.exit(0)  # Exit after generating Dockerfile for containerized workflows.
+
+    # Singularity setup
+    if args.singularity:
+        log_info("Singularity setup selected. Add implementation here.")
+        sys.exit(0)
 
     frameworks_override = []
     if args.preset:
@@ -106,6 +114,7 @@ def main():
             print(f"{step_name} failed. Check logs/error_log.txt for details.")
             sys.exit(1)
 
+    log_info("Full GPU setup completed successfully.")  # Final success log entry
     print("All steps completed successfully. Your GPU environment is ready!")
     print("Check logs/validation_log.txt for framework test results and performance metrics.")
     if os.path.exists("logs/validation_log.txt"):
@@ -119,3 +128,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
