@@ -3,6 +3,7 @@ import os
 import time
 import json
 import torch
+import yaml
 from utils import log_info
 
 # Helper to load expected performance from compatibility
@@ -12,7 +13,7 @@ def load_expected_performance():
             env_data = json.load(f)
         gpu_model = env_data.get("gpu_model", "unknown_gpu")
         with open("configs/compatibility.yaml") as f:
-            compatibility = json.load(f) if f.read().strip() == "" else yaml.safe_load(open("configs/compatibility.yaml"))
+            compatibility = yaml.safe_load(f)
         if gpu_model in compatibility and "expected_performance" in compatibility[gpu_model]:
             return compatibility[gpu_model]["expected_performance"]
         elif gpu_model == "unknown_gpu":
@@ -31,8 +32,7 @@ def pytorch_benchmark():
     C = A @ B
     torch.cuda.synchronize()
     duration = time.time() - start
-    # Duration in seconds, convert to ms:
-    return f"PyTorch matmul: {duration*1000:.2f} ms"
+    return f"PyTorch matmul: {duration * 1000:.2f} ms"
 
 def tensorflow_benchmark():
     try:
@@ -40,13 +40,49 @@ def tensorflow_benchmark():
         from tensorflow.keras.applications import resnet50
         model = resnet50.ResNet50(weights=None)
         with tf.device('/GPU:0'):
-            dummy_input = tf.random.normal([1,224,224,3])
+            dummy_input = tf.random.normal([1, 224, 224, 3])
             start = time.time()
             pred = model(dummy_input)
             duration = time.time() - start
         return f"TensorFlow ResNet inference: {duration:.4f} s"
-    except:
-        return "TensorFlow benchmark not run (TF missing or no GPU)."
+    except Exception as e:
+        return f"TensorFlow benchmark failed: {e}"
+
+def jax_benchmark():
+    try:
+        import jax
+        import jax.numpy as jnp
+        key = jax.random.PRNGKey(0)
+        x = jax.random.normal(key, (1000, 1000))
+        start = time.time()
+        y = jnp.dot(x, x.T).block_until_ready()
+        duration = time.time() - start
+        return f"JAX matmul: {duration * 1000:.2f} ms"
+    except Exception as e:
+        return f"JAX benchmark failed: {e}"
+
+def onnx_benchmark():
+    try:
+        import onnxruntime as ort
+        sess = ort.InferenceSession("resnet50-v2-7.onnx", providers=["CUDAExecutionProvider"])
+        dummy_input = {"data": [[0.5] * 224 * 224 * 3]}
+        start = time.time()
+        sess.run(None, dummy_input)
+        duration = time.time() - start
+        return f"ONNX inference: {duration:.4f} s"
+    except FileNotFoundError:
+        return "ONNX model file not found (resnet50-v2-7.onnx)."
+    except Exception as e:
+        return f"ONNX benchmark failed: {e}"
+
+def cudnn_benchmark():
+    try:
+        import ctypes
+        libcudnn = ctypes.cdll.LoadLibrary("libcudnn.so")
+        version = ctypes.c_char_p.in_dll(libcudnn, "cudnnGetVersion").value
+        return f"cuDNN version: {version.decode('utf-8')} validated."
+    except Exception as e:
+        return f"cuDNN test failed: {e}"
 
 def qiskit_benchmark():
     try:
@@ -87,10 +123,13 @@ def main():
     result_lines = []
     pt_res = pytorch_benchmark()
     tf_res = tensorflow_benchmark()
+    jx_res = jax_benchmark()
+    onnx_res = onnx_benchmark()
+    cudnn_res = cudnn_benchmark()
     qk_res = qiskit_benchmark()
     cq_res = cirq_benchmark()
 
-    result_lines.extend([pt_res, tf_res, qk_res, cq_res])
+    result_lines.extend([pt_res, tf_res, jx_res, onnx_res, cudnn_res, qk_res, cq_res])
     result_lines = compare_performance(result_lines, expected)
 
     if not os.path.exists("logs"):
@@ -106,5 +145,5 @@ def main():
         print(" -", line)
 
 if __name__ == "__main__":
-    import yaml
     main()
+
