@@ -1,11 +1,11 @@
 # Advanced Usage
 
 ## CUSTOM FRAMEWORKS AND STEPS
-Use 
-- --frameworks to specify frameworks you want installed. 
+Use: 
+- `--frameworks` to specify frameworks you want installed. 
 For example:
-- --frameworks pytorch cirq installs only those frameworks.
-Use - --no-frameworks to skip framework installation entirely.
+- `--frameworks` pytorch cirq installs only those frameworks.
+Use - `--no-frameworks` to skip framework installation entirely.
 
 ## HANDLING UNKNOWN GPUS OR OSES
 If your GPU or OS isn’t recognized, the tool defaults to the unknown_gpu or fallback configurations. To improve support for your environment:
