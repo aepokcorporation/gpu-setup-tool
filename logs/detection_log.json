@@ -1,1 +1,8 @@
-
+{
+  "gpu_models": ["nvidia_a100"],
+  "os": "Ubuntu 20.04",
+  "cloud_provider": "AWS",
+  "cuda_version": "11.8",
+  "frameworks_available": ["TensorFlow", "PyTorch", "JAX", "ONNX Runtime"],
+  "timestamp": "2025-01-23T12:34:56Z"
+}

@@ -1,24 +1,39 @@
 # Advanced Usage
 
-## Custom Frameworks and Steps
-- `--frameworks pytorch cirq` installs only those frameworks.
-- `--no-frameworks` skips frameworks.
+## CUSTOM FRAMEWORKS AND STEPS
+Use:
+- `--frameworks` to specify frameworks you want installed.  
+  For example:  
+  - `--frameworks pytorch cirq` installs only those frameworks.
 
-## Handling Unknown GPUs or OSes
-If your GPU or OS isn’t recognized, the tool uses the `unknown_gpu` or `fallback` configs. To improve support:
+Use:
+- `--no-frameworks` to skip framework installation entirely.
 
-1. Open `configs/compatibility.yaml`.
-2. Add a new entry with:
-   - `driver_version`, `cuda_version`
-   - `libraries` (cuDNN, NCCL)
-   - `frameworks` (with versions)
-   - Optional `expected_performance` metrics for benchmarking comparison.
-3. Re-run `setup_all.py`. The tool will detect your new configuration.
+These are optional arguments users can pass to the script.  
+They provide control over specific parts of the tool's behavior.
 
-By defining these values, you provide the script a “known path” to set up and validate your specific environment, reducing reliance on fallback defaults.
+---
 
-## CI/CD Integration
-Integrate `setup_all.py` into CI workflows to pre-configure GPU builds.
+## HANDLING UNKNOWN GPUS OR OSES
+If your GPU or OS isn’t recognized, the tool defaults to the `unknown_gpu` or `fallback` configurations. To improve support for your environment:
 
-## Extending Benchmarks
-You can modify `tests/benchmark.py` to add custom models or datasets for more realistic performance tests.
+1. Open the file `configs/compatibility.yaml`.
+2. Add a new entry with the following details:
+   - `driver_version` and `cuda_version`
+   - Libraries such as `cuDNN` and `NCCL`
+   - Frameworks with specific versions
+   - Optional `expected_performance` metrics for benchmarking comparison
+
+After defining these values, re-run `setup_all.py`.  
+The tool will use your custom configuration to set up and validate your environment, reducing reliance on fallback defaults.
+
+---
+
+## CI/CD INTEGRATION
+You can integrate `setup_all.py` into CI/CD workflows to pre-configure GPU builds, ensuring consistency across development environments.
+
+---
+
+## EXTENDING BENCHMARKS
+To add custom models or datasets for more realistic performance tests, modify `tests/benchmark.py` as needed.  
+This allows you to fine-tune benchmarks for your specific workflows.

@@ -1,11 +1,12 @@
 # Security Policy
 
 ## Supported Versions  
-This project is currently in its **v0.1.0 (Initial Release)** stage. Security updates and fixes will apply to this version only.  
+This project is currently in its **v2.0 (Second Version Release)** stage. Security updates and fixes will apply to these versions only.  
 
 | Version   | Supported         |  
 | --------- | ----------------- |  
 | v0.1.0    | ✅: Supported      |  
+| v2.0      | ✅: Supported      |
 
 ---
 
@@ -14,7 +15,7 @@ If you discover a security vulnerability, please report it responsibly. Here’s
 
 1. **Open a Security Issue**:  
    - Submit an issue in the repository with the label **“security.”**  
-   - Alternatively, email us at villas.erased-93@icloud.com  
+   - Alternatively, email us at tyler@aepokcorp.com  
 
 2. **Provide Detailed Information**:  
    - Steps to reproduce the issue.  

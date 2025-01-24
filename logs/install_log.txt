@@ -1,1 +1,5 @@
-
+# This is an example log file. Actual content will populate as the tool runs.
+[INFO 2025-01-23 12:35:20] Installing TensorFlow 2.10.0...
+[INFO 2025-01-23 12:35:25] TensorFlow installation successful.
+[INFO 2025-01-23 12:36:00] Docker container gpu-setup-tool built successfully.
+[INFO 2025-01-23 12:36:10] Docker container gpu-setup-tool ran successfully: nvidia-smi output logged.

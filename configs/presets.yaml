@@ -1,9 +1,73 @@
 presets:
   tensorflow-ubuntu:
+    description: "Ubuntu-based setup with TensorFlow."
     frameworks: ["tensorflow"]
+    base_image: "nvidia/cuda:11.8.0-base-ubuntu20.04"
+    cuda_version: "11.8"
+    libraries:
+      - name: cuDNN
+        version: "8.4"
 
   pytorch-ubuntu:
+    description: "Ubuntu-based setup with PyTorch."
     frameworks: ["pytorch"]
+    base_image: "nvidia/cuda:11.7.0-base-ubuntu20.04"
+    cuda_version: "11.7"
+    libraries:
+      - name: cuDNN
+        version: "8.4"
 
   quantum-starter:
+    description: "Quantum computing starter preset with Qiskit and Cirq."
     frameworks: ["qiskit", "cirq"]
+    base_image: "nvidia/cuda:11.8.0-base-ubuntu20.04"
+    cuda_version: "11.8"
+
+  jax-onnx-starter:
+    description: "JAX and ONNX Runtime setup for machine learning on GPUs."
+    frameworks: ["jax", "onnxruntime"]
+    base_image: "nvidia/cuda:11.8.0-base-ubuntu20.04"
+    cuda_version: "11.8"
+    libraries:
+      - name: cuDNN
+        version: "8.4"
+      - name: NCCL
+        version: "2.14"
+
+  aws-dl-ami:
+    description: "AWS Deep Learning AMI configuration with pre-installed drivers."
+    cloud: "AWS"
+    frameworks: ["tensorflow", "pytorch", "jax", "onnxruntime"]
+    base_image: "aws/deep-learning-ami-gpu-pytorch"
+    note: "Drivers and CUDA may already be installed. Verify with nvidia-smi."
+    cuda_version: "11.8"
+
+  azure-nc-vm:
+    description: "Azure NC-series VM configuration with TensorFlow and PyTorch."
+    cloud: "Azure"
+    frameworks: ["tensorflow", "pytorch"]
+    base_image: "nvidia/cuda:11.7.0-base-ubuntu20.04"
+    cuda_version: "11.7"
+    note: "NC-series VMs are GPU-enabled but may require driver updates."
+
+  gcp-gpu-instance:
+    description: "Google Cloud GPU setup with TensorFlow and ONNX Runtime."
+    cloud: "GCP"
+    frameworks: ["tensorflow", "onnxruntime"]
+    base_image: "nvidia/cuda:11.8.0-base-ubuntu20.04"
+    cuda_version: "11.8"
+    libraries:
+      - name: cuDNN
+        version: "8.4"
+    note: "Ensure GPU quota and drivers are set up via GCP tools."
+
+  hybrid-ml-starter:
+    description: "Hybrid starter preset with TensorFlow, PyTorch, JAX, and ONNX."
+    frameworks: ["tensorflow", "pytorch", "jax", "onnxruntime"]
+    base_image: "nvidia/cuda:11.8.0-base-ubuntu20.04"
+    cuda_version: "11.8"
+    libraries:
+      - name: cuDNN
+        version: "8.4"
+      - name: NCCL
+        version: "2.14"
