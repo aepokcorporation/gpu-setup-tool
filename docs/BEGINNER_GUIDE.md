@@ -14,7 +14,7 @@ The tool detects your GPU, OS, and applies the best-fit configurations. It perfo
 
 After completion, check logs/validation_log.txt for detailed validation tests (e.g., ResNet inference in TensorFlow).
 
-###New Features for Beginners
+### New Features for Beginners
 Docker Setup:
 Run the tool in a containerized environment for reproducibility. 
 
