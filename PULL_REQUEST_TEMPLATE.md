@@ -34,9 +34,9 @@ How were the changes tested? Provide clear instructions for reproducing the resu
 
 ### Additional Notes  
 (Optional) Add anything else reviewers should know, such as tradeoffs, assumptions, or future improvements:  
-- Future support for AMD GPUs is planned in `v0.2.0`.  
+- Future support for AMD GPUs is planned in `v0.3.0`.  
 
 ---
 
 ## Contact  
-If you have questions about this PR, you can reach me at [villas.erased-93@icloud.com](mailto:villas.erased-93@icloud.com).  
+If you have questions about this PR, you can reach me at [tyler@aepokcorp.com](mailto:tyler@aepokcorp.com).  
