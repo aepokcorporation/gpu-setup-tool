@@ -51,7 +51,7 @@ def generate_dockerfile(cuda_version, frameworks):
     dockerfile_path = os.path.join(os.getcwd(), "Dockerfile")
     with open(dockerfile_path, "w") as f:
         f.write(dockerfile_content)
-    log_info(f"Dockerfile generated at {dockerfile_path}")
+    log_info("Dockerfile generated successfully at {dockerfile_path}.")  # Explicit log
 
 def build_docker_image(image_name="gpu-setup-tool"):
     """
@@ -60,6 +60,7 @@ def build_docker_image(image_name="gpu-setup-tool"):
     try:
         log_info(f"Building Docker image: {image_name}")
         safe_subprocess_call(["docker", "build", "-t", image_name, "."])
+        log_info(f"Docker image '{image_name}' built successfully.")  # Success log
     except Exception as e:
         log_error(f"Failed to build Docker image: {e}", sys.exc_info())
         raise RuntimeError(f"Failed to build Docker image: {e}")
@@ -71,6 +72,7 @@ def run_docker_container(image_name="gpu-setup-tool", command="nvidia-smi"):
     try:
         log_info(f"Running Docker container: {image_name}")
         safe_subprocess_call(["docker", "run", "--gpus", "all", image_name, command])
+        log_info("Docker container ran successfully.")  # Explicit log
     except Exception as e:
         log_error(f"Failed to run Docker container: {e}", sys.exc_info())
         raise RuntimeError(f"Failed to run Docker container: {e}")
