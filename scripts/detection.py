@@ -26,7 +26,7 @@ def detect_gpu():
                 gpu_list.append("nvidia_generic")
         return gpu_list if gpu_list else ["unknown_gpu"]
     except Exception as e:
-        log_error(f"Failed to detect GPU using nvidia-smi: {e}")
+        log_error(f"Failed to detect GPU using nvidia-smi: {e}", sys.exc_info())
         return ["unknown_gpu"]
 
 def detect_os():
@@ -38,7 +38,7 @@ def detect_os():
                         return line.strip().split("=")[1].strip('"')
         return platform.system()
     except Exception as e:
-        log_error(f"Failed to detect OS: {e}")
+        log_error(f"Failed to detect OS: {e}", sys.exc_info())
         return "Unknown OS"
 
 def detect_cloud_provider():
@@ -61,7 +61,7 @@ def detect_cloud_provider():
             return "GCP"
 
     except Exception as e:
-        log_error(f"Failed to detect cloud provider: {e}")
+        log_error(f"Failed to detect cloud provider: {e}", sys.exc_info())
     return "Unknown"
 
 def detect_cuda_version():
@@ -72,7 +72,7 @@ def detect_cuda_version():
                 version = line.split("release")[-1].strip().split(" ")[0]
                 return version
     except Exception as e:
-        log_error(f"Failed to detect CUDA version: {e}")
+        log_error(f"Failed to detect CUDA version: {e}", sys.exc_info())
     return "Unknown"
 
 def main():
@@ -101,6 +101,7 @@ def main():
             json.dump(data, f, indent=2)
 
         log_info(f"Detection complete: {data}")
+        log_info("Environment detection completed successfully.")  # New log entry for install_log.txt
 
         # Provide environment-specific suggestions
         if cloud_provider == "Azure":
@@ -112,7 +113,7 @@ def main():
 
         print("Detection successful. Check logs/detection_log.json for details.")
     except Exception as e:
-        log_error("Error during detection", exc_info=sys.exc_info())
+        log_error("Error during detection", sys.exc_info())
         print("Detection failed. Check logs/error_log.txt for details.")
         sys.exit(1)
 
