@@ -1,7 +1,7 @@
 # GPU Setup Tool
 
 **Simplify GPU environment configuration, validation, and benchmarking.**  
-This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, NCCL), and popular frameworks like TensorFlow and PyTorch. It detects your system’s GPU and OS, installs everything you need, and validates that your setup works—no hassle required.
+This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, NCCL), and popular frameworks like TensorFlow, PyTorch, JAX, and ONNX Runtime. It detects your system’s GPU and OS, installs everything you need, and validates that your setup works—no hassle required.
 
 ---
 
@@ -11,7 +11,11 @@ This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, N
 - **Seamless Installation:**
   - Installs GPU drivers, CUDA, and libraries with fallback logic for common issues.
 - **Framework Support:**
-  - Easily set up TensorFlow, PyTorch, Qiskit, Cirq, and more.
+  - Easily set up TensorFlow, PyTorch, JAX, ONNX Runtime, Qiskit, Cirq, and more.
+- **Cloud Optimizations:**
+  - Tailored configurations for AWS, Azure, and GCP environments.
+- **Docker/Singularity Support:**
+  - Run containerized workflows for reproducibility and easier debugging.
 - **Validation & Benchmarking:**
   - Ensures everything is working with functional tests and performance metrics.
 
@@ -21,12 +25,13 @@ This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, N
 
 ### Requirements
 - **Hardware:** NVIDIA GPU (support for AMD coming soon).  
-- **OS:** Linux (Ubuntu 20.04+, Debian, CentOS supported).
+- **OS:** Linux (Ubuntu 20.04+, Debian, CentOS supported).  
+- **Optional:** Docker or Singularity for containerized setups.
 
 ### Quick Start
 1. Clone this repository:
     ```bash
-    git clone https://github.com/exoriantech/gpu-setup-tool.git
+    git clone https://github.com/aepokcorporation/gpu-setup-tool.git
     cd gpu-setup-tool
     ```
 2. Run the setup script:
@@ -35,9 +40,7 @@ This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, N
     ```
 3. Follow the on-screen instructions. Logs will be saved in the `logs/` directory.
 
-### Known Limitations
-- Current focus is on NVIDIA GPUs. AMD support is planned for future releases.
-- Compatibility may vary across VMs and environments—feedback is welcome to improve the tool.
+---
 
 ## Validation and Benchmarking
 
@@ -49,10 +52,14 @@ Once the setup is complete, the tool runs validation tests to confirm:
 2. **Framework Tests:**
    - **TensorFlow:** Runs a ResNet inference test.
    - **PyTorch:** Performs a multi-layer MLP forward pass.
+   - **JAX:** Validates matrix multiplication on GPU.
+   - **ONNX Runtime:** Tests model inference using a lightweight ONNX model.
 3. **Benchmarks:**
    - Measures GPU performance and compares it to expected metrics for known GPUs.
 
 **Logs:** All validation results are saved in `logs/validation_log.txt`.
+
+---
 
 ## Contributing
 
@@ -66,20 +73,30 @@ Contributions are welcome! You can help by:
 2. Create a feature branch.
 3. Submit a pull request with your changes.
 
+---
+
 ## Roadmap
 
 **Planned Features:**
-- Docker/Singularity container support for easier reproducibility.
-- Expanded framework integration (e.g., JAX, ONNX).
-- Optimized configurations for cloud environments (AWS, Azure, GCP).
+- Further expand framework support (e.g., TensorRT, PaddlePaddle).
+- Enhanced cloud-specific setups for multi-GPU training.
+- GUI-based tool for easier user interaction and validation.
+- Pre-built Docker images for faster container-based setups.
+- AMD GPU support for ROCm environments.
+
+---
 
 ## Feedback and Contact
 
 If you encounter issues or have suggestions, feel free to open an issue. Contributions are highly encouraged!
 
+---
+
 ## License
 
 This project is licensed under the MIT License.
+
+---
 
 ### A Note on Testing
 
