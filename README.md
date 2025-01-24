@@ -3,6 +3,18 @@
 **Simplify GPU environment configuration, validation, and benchmarking.**  
 This tool automates the setup of GPU drivers, CUDA toolkits, libraries (cuDNN, NCCL), and popular frameworks like TensorFlow, PyTorch, JAX, and ONNX Runtime. It detects your system’s GPU and OS, installs everything you need, and validates that your setup works—no hassle required.
 
+### Disclaimer
+
+This tool is an **open-source project in active development** and has not been tested across all possible environments. While it automates GPU configuration, installation, and validation for common setups, there may be limitations or unexpected issues in certain environments.
+
+**Known Limitations**:
+- Primary focus is on NVIDIA GPUs (AMD GPU support is planned for a future release).
+- Compatibility may vary across cloud platforms (AWS, Azure, GCP) and VM environments.
+- Testing has been limited to a subset of hardware and configurations.
+
+We welcome your feedback, bug reports, and contributions to improve the tool for everyone.  
+Please report issues or share suggestions via [GitHub issues](https://github.com/aepokcorporation/gpu-setup-tool/issues).
+
 ---
 
 ## Features
