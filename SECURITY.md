@@ -6,6 +6,7 @@ This project is currently in its **v0.1.0 (Initial Release)** stage. Security up
 | Version   | Supported         |  
 | --------- | ----------------- |  
 | v0.1.0    | ✅: Supported      |  
+| v2.0      | ✅: Supported      |
 
 ---
 
