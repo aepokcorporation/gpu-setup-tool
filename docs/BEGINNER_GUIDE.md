@@ -14,6 +14,22 @@ The tool detects your GPU, OS, and applies the best-fit configurations. It perfo
 
 After completion, check logs/validation_log.txt for detailed validation tests (e.g., ResNet inference in TensorFlow).
 
+### CLONE THE REPOSITORY
+
+To get started, clone the repository to your local machine:
+```bash
+git clone https://github.com/aepokcorporation/gpu-setup-tool.git
+cd gpu-setup-tool
+```
+
+### INSTALL PREREQUISITES
+
+Make sure your environment has Python 3.x installed:
+```bash
+sudo apt-get update
+sudo apt-get install -y python3 python3-pip
+```
+
 ### New Features for Beginners
 Docker Setup:
 Run the tool in a containerized environment for reproducibility. 
