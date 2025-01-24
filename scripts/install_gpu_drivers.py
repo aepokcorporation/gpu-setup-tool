@@ -56,10 +56,10 @@ def install_driver(driver_version, cloud_env):
     log_info(f"Installing NVIDIA driver version {driver_version} for {cloud_env}.")
     try:
         if cloud_env == "AWS":
-            log_info("Skipping driver installation on AWS as NVIDIA drivers are pre-installed.")
+            log_info("Driver installation skipped: AWS environment detected with pre-installed drivers.")
             return
         elif cloud_env == "Azure" or cloud_env == "GCP":
-            log_info("Using cloud-specific repositories for NVIDIA driver installation.")
+            log_info(f"Using cloud-specific repositories for NVIDIA driver installation on {cloud_env}.")
             safe_subprocess_call(["sudo", "apt-get", "update"])
             safe_subprocess_call(["sudo", "apt-get", "-y", "install", f"nvidia-driver-{driver_version}"])
         else:
@@ -70,6 +70,7 @@ def install_driver(driver_version, cloud_env):
             safe_subprocess_call(["sudo", "apt-get", "-y", "install", pkg], retries=2)
         configure_ldconfig(f"/usr/lib/nvidia-{driver_version}")
         configure_env_vars(f"/usr/lib/nvidia-{driver_version}")
+        log_info(f"NVIDIA driver version {driver_version} installed successfully for {cloud_env}.")
         record_apt_package(f"nvidia-driver-{driver_version}")
     except Exception as e:
         raise RuntimeError(f"Driver installation failed: {e}")
@@ -90,6 +91,7 @@ def main():
         try:
             install_driver(driver_version, cloud_env)
             log_info(f"Installed NVIDIA driver version: {driver_version} for {cloud_env}.")
+            log_info("GPU driver installation completed successfully.")  # New success log entry
             print("GPU driver installation complete.")
         except Exception:
             log_error("Driver installation failed, attempting rollback and fallback.", sys.exc_info())
@@ -109,3 +111,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
